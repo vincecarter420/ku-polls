@@ -1,15 +1,15 @@
 [
 {
   "model": "polls.question",
-  "pk": 2,
+  "pk": 4,
   "fields": {
-    "question_text": "How much money do you make each month?",
+    "question_text": "Which kind of movie genre do you prefer?",
     "pub_date": "2023-09-03T10:17:25Z"
   }
 },
-{
+  {
   "model": "polls.question",
-  "pk": 3,
+  "pk": 5,
   "fields": {
     "question_text": "Which kind of transportation do you prefer in Bangkok?",
     "pub_date": "2023-09-03T10:18:10Z"
