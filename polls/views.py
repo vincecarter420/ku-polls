@@ -1,9 +1,10 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect,Http404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from .models import Choice, Question
+from django.contrib import messages
 
 
 class IndexView(generic.ListView):
@@ -28,6 +29,17 @@ class DetailView(generic.DetailView):
         Excludes any questions that aren't published yet.
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
+    
+    def get(self, request, *args, **kwargs):
+        try:
+            self.object = self.get_object()
+        except Http404:
+            return redirect('polls:index')
+        if not self.object.can_vote():
+            messages.error(request,'The poll is not available.')
+            return redirect('polls:index')
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
 
 class ResultsView(generic.DetailView):
@@ -40,6 +52,16 @@ class ResultsView(generic.DetailView):
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
 
+    def get(self, request, *args, **kwargs):
+        try:
+            self.object = self.get_object()
+        except Http404:
+            return redirect('polls:index')
+        if not self.object.is_published():
+            messages.error(request,'The poll is not available.')
+            return redirect('polls:index')
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
