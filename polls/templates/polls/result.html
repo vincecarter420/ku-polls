@@ -1,13 +1,27 @@
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KU POLL - Results for {{ question.question_text }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>KU POLL</h1>
+    </header>
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+    <main>
+        <h2>{{ question.question_text }}</h2>
 
-<h1 class="title">{{ question.question_text }}</h1>
+        <ul>
+            {% for choice in question.choice_set.all %}
+                <li>{{ choice.choice_text }} - {{ choice.votes }} vote(s)</li>
+            {% endfor %}
+        </ul>
 
-<ul class="choice">
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-{% endfor %}
-</ul>
-
-<a href="{% url 'polls:detail' question.id %}" class="choice">Vote again?</a>
+        <p><a href="{% url 'polls:detail' question.id %}">Vote again?</a></p>
+        <p><a href="{% url 'polls:index' %}">Back</a></p>
+    </main>
+</body>
+</html>

@@ -1,13 +1,26 @@
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KU POLL - Latest Questions</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>KU POLL</h1>
+    </header>
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+    <main>
+        <h2>Latest Questions</h2>
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+        <ul>
+            {% for question in latest_question_list %}
+                <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <p><a href="{% url 'polls:index' %}">Back</a></p>
+    </main>
+</body>
+</html>
