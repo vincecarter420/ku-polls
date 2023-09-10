@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KU POLL - Results for {{ question.question_text }}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>KU POLL</h1>
+    </header>
+
+    <main>
+        <h2>Results for {{ question.question_text }}</h2>
+
+        <ul>
+            {% for choice in question.choice_set.all %}
+                <li>{{ choice.choice_text }} - {{ choice.votes }} vote(s)</li>
+            {% endfor %}
+        </ul>
+
+        <p><a href="{% url 'polls:index' %}">Back to List of Polls</a></p>
+    </main>
+</body>
+</html>
+
