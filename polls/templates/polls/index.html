@@ -7,6 +7,15 @@
     <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 </head>
 <body>
+    <div class="Problems">
+        <div class="container">
+            {% if user.is_authenticated %}
+                Welcome back, {{ user.username }} 
+            {% else %}
+                Please <a href="{% url 'login' %}?next={{request.path}}">Login</a>
+            {% endif %}
+        </div>
+    </div>
     <header>
         <h1>KU POLL</h1>
     </header>
