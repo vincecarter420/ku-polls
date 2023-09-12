@@ -1,7 +1,7 @@
 li a {
-    color: black;
+    color: whitesmoke;
 }
 
 body {
-    background: #6a00ff url("bg1.jpeg") no-repeat;
+    background: #55a03c url("images/bg1.jpeg") no-repeat;
 }
