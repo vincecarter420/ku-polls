@@ -3,8 +3,9 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-from .models import Choice, Question
+from .models import Choice, Question, Vote
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 class IndexView(generic.ListView):
     """
@@ -74,11 +75,17 @@ class ResultsView(generic.DetailView):
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
+@login_required
 def vote(request, question_id):
     """
     View for handling user votes on a question.
     """
     question = get_object_or_404(Question, pk=question_id)
+
+    if not question.can_vote():
+        messages.error(request, 'The poll is not available.')
+        return redirect("polls:index")
+    
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
@@ -87,10 +94,20 @@ def vote(request, question_id):
             'question': question,
             'error_message': "You didn't select a choice.",
         })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    
+    this_user = request.user
+
+    try:
+        # find a vote for this user and this question
+        vote = Vote.objects.get(user=this_user, choice__question=question)
+        # update his vote
+        vote.choice = selected_choice
+    except Vote.DoesNotExist:
+        #no matching vote - create a new Vote
+        vote = Vote(user=this_user, choice=selected_choice)
+    vote.save()
+
+    # TODO: Use messages to display a confirmation on the result page.
+    
+
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
