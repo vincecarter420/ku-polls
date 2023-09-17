@@ -38,15 +38,24 @@ class DetailView(generic.DetailView):
         """
         Handle GET request for detail view.
         """
+
         try:
             self.object = self.get_object()
         except Http404:
             return redirect('polls:index')
+        
         if not self.object.can_vote():
             messages.error(request, 'The poll is not available.')
             return redirect('polls:index')
-        context = self.get_context_data(object=self.object)
+        
+        user = request.user
+        try:
+            current_vote = self.object.choice_set.filter(vote__user=user).last()
+        except TypeError:
+            current_vote = None
+        context = self.get_context_data(object=self.object, current_vote=current_vote)
         return self.render_to_response(context)
+        
 
 class ResultsView(generic.DetailView):
     """
@@ -54,6 +63,12 @@ class ResultsView(generic.DetailView):
     """
     model = Question
     template_name = 'polls/results.html'
+
+    def get_queryset(self):
+        """
+        Excludes any questions that aren't published yet.
+        """
+        return Question.objects.filter(pub_date__lte=timezone.now())
 
     def get(self, request, *args, **kwargs):
         """
@@ -100,9 +115,15 @@ def vote(request, question_id):
         #no matching vote - create a new Vote
         vote = Vote(user=this_user, choice=selected_choice)
     vote.save()
-
     # Add message after user successfully vote.
-    messages.success(request, 'Your vote is saved.')
-    
-
+    messages.success(request, 'Your vote has been saved.')
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+def get_client_ip(request):
+    """Get the visitor’s IP address using request headers."""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
