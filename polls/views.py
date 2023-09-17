@@ -50,6 +50,7 @@ class DetailView(generic.DetailView):
         
         user = request.user
         try:
+            # Retrieve the current vote of the user for this question
             current_vote = self.object.choice_set.filter(vote__user=user).last()
         except TypeError:
             current_vote = None
