@@ -55,12 +55,6 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
-    def get_queryset(self):
-        """
-        Excludes any questions that aren't published yet.
-        """
-        return Question.objects.filter(pub_date__lte=timezone.now())
-
     def get(self, request, *args, **kwargs):
         """
         Handle GET request for results view.
@@ -107,7 +101,8 @@ def vote(request, question_id):
         vote = Vote(user=this_user, choice=selected_choice)
     vote.save()
 
-    # TODO: Use messages to display a confirmation on the result page.
+    # Add message after user successfully vote.
+    messages.success(request, 'Your vote is saved.')
     
 
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
