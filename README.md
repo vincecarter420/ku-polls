@@ -12,6 +12,11 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 to be added.
 
+| Username  | Password        |
+|-----------|-----------------|
+| boy | boy1234 |
+| harry | hackme22 |
+
 ## Project Documents
 
 All project documents are in the [Project Wiki](../../wiki/Home).
@@ -21,5 +26,6 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Development Plan](../../wiki/Development-Plan)
 - [Iteration 1](../../wiki/Iteration-1-Plan)
 - [Iteration 2](../../wiki/Iteration-2-Plan)
+- [Iteration 3](../../wiki/Iteration-3-Plan)
 
 [django-tutorial]: TODO-write-the-django-tutorial-URL-here
