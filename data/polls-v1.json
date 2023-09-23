@@ -1,18 +1,56 @@
 [
 {
   "model": "polls.question",
-  "pk": 4,
-  "fields": {
-    "question_text": "Which kind of movie genre do you prefer?",
-    "pub_date": "2023-09-03T10:17:25Z"
-  }
-},
-  {
-  "model": "polls.question",
-  "pk": 5,
+  "pk": 1,
   "fields": {
     "question_text": "Which kind of transportation do you prefer in Bangkok?",
-    "pub_date": "2023-09-03T10:18:10Z"
+    "pub_date": "2023-09-10T11:19:49Z",
+    "end_date": "2023-09-15T12:00:00Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 2,
+  "fields": {
+    "question_text": "Which kind of genre of movie do you prefer?",
+    "pub_date": "2023-09-10T11:20:19Z",
+    "end_date": "2023-09-15T11:20:23Z"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 1,
+  "fields": {
+    "question": 1,
+    "choice_text": "Car",
+    "votes": 0
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 2,
+  "fields": {
+    "question": 1,
+    "choice_text": "Bus",
+    "votes": 0
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 3,
+  "fields": {
+    "question": 1,
+    "choice_text": "Train",
+    "votes": 0
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 4,
+  "fields": {
+    "question": 1,
+    "choice_text": "Taxi",
+    "votes": 0
   }
 }
 ]
