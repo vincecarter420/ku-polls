@@ -10,7 +10,30 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 ## Install and Run
 
-to be added.
+Please check the installation guide here [Installation](Installation.md)
+
+## How to Run
+
+1. activate the virtual environment
+
+On Mac/Linux
+```
+. myenv/bin/activate
+```
+On Windows
+```
+myenv\Scripts\activate
+```
+2. run server
+
+```
+python manage.py runserver
+```
+3. goto http://127.0.0.1:8000/ on your any Browser
+
+4. for quit press ```Control + C```
+
+5.deactivate the virtual environment ```deactivate```
 
 ## User Account
 
@@ -18,6 +41,12 @@ to be added.
 |-----------|-----------------|
 | boy | boy1234 |
 | harry | hackme22 |
+
+### Admin Account
+
+| Username  | Password        |
+|-----------|-----------------|
+| voevin | voevin1234 |
 
 ## Project Documents
 
