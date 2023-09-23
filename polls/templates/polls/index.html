@@ -27,6 +27,11 @@
             {% for question in latest_question_list %}
                 <li>
                     {{ question.question_text }}
+                    <br>
+                    Published date: {{ question.pub_date }}
+                    <br>
+                    End date: {{ question.end_date }}
+                    <br>
                     <a href="{% url 'polls:detail' question.id %}">Vote</a>
                     <a href="{% url 'polls:results' question.id %}">Results</a>
                 </li>
